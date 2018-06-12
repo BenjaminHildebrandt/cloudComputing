@@ -13,3 +13,7 @@ az webapp deployment source config --name CC18UploadServer --resource-group Clou
 az webapp deployment source sync --name CC18UploadServer --resource-group CloudComputing
 
 echo http://UploadServers.azurewebsite.net
+
+# Delete WebApp and AppServicePlan
+az webapp delete --name CC18UploadServer --resource-group CloudComputing
+az appservice plan delete --name CC18UploadServers --resource-group CloudComputing
