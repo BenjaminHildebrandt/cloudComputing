@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Create App-Service Plan 'free'
+az appservice plan create --name CC18UploadServers --resource-group CloudComputing --sku free
+
+# Create the Upload server
+az webapp create --name CC18UploadServer --resource-group CloudComputing --plan CC18UploadServers
+
+# Set git deployment
+az webapp deployment source config --name CC18UploadServer --resource-group CloudComputing --repo-url https://github.com/BenjaminHildebrandt/cloudComputing --branch uploadServer --manual-integration
+
+# Synchronize the git
+az webapp deployment source sync --name CC18UploadServer --resource-group CloudComputing
+
+echo http://UploadServers.azurewebsite.net
