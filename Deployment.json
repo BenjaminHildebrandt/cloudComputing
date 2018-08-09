@@ -29,7 +29,7 @@
       },
       "minimumCapacity": {
         "type": "Int",
-        "defaultValue": 2,
+        "defaultValue": 1,
         "metadata": {
           "description": "The minimum capacity.  Autoscale engine will ensure the instance count is at least this value."
         }
@@ -43,7 +43,7 @@
       },
       "defaultCapacity": {
         "type": "Int",
-        "defaultValue": 5,
+        "defaultValue": 2,
         "metadata": {
           "description": "The default capacity.  Autoscale engine will preventively set the instance count to be this value if it can not find any metric data."
         }
@@ -84,7 +84,7 @@
         }
       },
       "autoscaleEnabled": {
-        "type": "Bool",
+        "type": "bool",
         "metadata": {
           "description": "A boolean to indicate whether the autoscale policy is enabled or disabled."
         }
@@ -97,7 +97,7 @@
     "resources": [
       {
         "type": "Microsoft.Web/serverfarms",
-        "apiVersion": "2017-06-01",
+        "apiVersion": "2017-08-01",
         "name": "[parameters('svcPlanName')]",
         "location": "[resourceGroup().location]",
         "sku": {
