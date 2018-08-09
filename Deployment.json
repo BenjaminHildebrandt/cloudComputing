@@ -82,6 +82,12 @@
         "metadata": {
           "description": "The percentage to decrease the instance count when autoscale engine is initiating scale in action."
         }
+      },
+      "autoscaleEnabled": {
+        "type": "Bool",
+        "metadata": {
+          "description": "A boolean to indicate whether the autoscale policy is enabled or disabled."
+        }
       }
     },
     "variables": {
@@ -91,7 +97,7 @@
     "resources": [
       {
         "type": "Microsoft.Web/serverfarms",
-        "apiVersion": "2015-08-01",
+        "apiVersion": "2017-06-01",
         "name": "[parameters('svcPlanName')]",
         "location": "[resourceGroup().location]",
         "sku": {
@@ -159,7 +165,7 @@
               ]
             }
           ],
-          "enabled": true,
+          "enabled": "[parameters('autoscaleEnabled')]",
           "targetResourceUri": "[variables('targetResourceId')]"
         }
       }
