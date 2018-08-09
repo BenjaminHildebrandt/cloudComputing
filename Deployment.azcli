@@ -6,6 +6,7 @@ az group create --location northeurope --name CloudComputingUpload
 az group create --location northeurope --name CloudComputingStream
 az group create --location northeurope --name CloudComputingBalancer
 
+az config mode arm
 az group deployment create --resource-group CloudComputingUpload --name Test --template-uri https://raw.githubusercontent.com/debraMin/cloudComputing/master/Deployment.json
 
 
@@ -51,14 +52,14 @@ echo http://UploadServers.azurewebsite.net
 
 # Delete WebApp and AppServicePlan
 az webapp delete --name CC18UploadServer --resource-group CloudComputingUpload
-az appservice plan delete --name CC18UploadServers --resource-group CloudComputingUpload
+az appservice plan delete --name CC18UploadServers --resource-group CloudComputingUpload --yes
 
 az webapp delete --name CC18StreamServer --resource-group CloudComputingStream
-az appservice plan delete --name CC18StreamServers --resource-group CloudComputingStream
+az appservice plan delete --name CC18StreamServers --resource-group CloudComputingStream --yes
 
 az webapp delete --name CC18LoadBalancer --resource-group CloudComputingBalancer
-az appservice plan delete --name CC18LoadBalancers --resource-group CloudComputingBalancer
+az appservice plan delete --name CC18LoadBalancers --resource-group CloudComputingBalancer --yes
 
-az group delete --name CloudComputingUpload
-az group delete --name CloudComputingStream
-az group delete --name CloudComputingBalancer
+az group delete --name CloudComputingUpload --yes
+az group delete --name CloudComputingStream --yes
+az group delete --name CloudComputingBalancer --yes
