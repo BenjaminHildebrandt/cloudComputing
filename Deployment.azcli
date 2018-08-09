@@ -6,7 +6,7 @@ az group create --location northeurope --name CloudComputingUpload
 az group create --location northeurope --name CloudComputingStream
 az group create --location northeurope --name CloudComputingBalancer
 
-az group deployment create --resource-group CloudComputingUpload --name Test --template-file "https://github.com/debraMin/cloudComputing/Deployment.json"
+az group deployment create --resource-group CloudComputingUpload --name Test --template-uri https://raw.githubusercontent.com/debraMin/cloudComputing/master/Deployment.json
 
 
 # Create 3 App-Service Plan 'free'
