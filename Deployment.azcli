@@ -6,7 +6,6 @@ az group create --location northeurope --name CloudComputingUpload
 az group create --location northeurope --name CloudComputingStream
 az group create --location northeurope --name CloudComputingBalancer
 
-az config mode arm
 az group deployment create --resource-group CloudComputingUpload --name Test --template-uri https://raw.githubusercontent.com/debraMin/cloudComputing/master/Deployment.json
 
 

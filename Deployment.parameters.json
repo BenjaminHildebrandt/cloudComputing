@@ -10,6 +10,9 @@
       },
       "svcPlanSize": {
         "value": "S1"
+      },
+      "autoscaleEnabled": {
+        "value": true
       }
     }
   }

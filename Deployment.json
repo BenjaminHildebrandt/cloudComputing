@@ -159,7 +159,7 @@
               ]
             }
           ],
-          "enabled": "[parameters('autoscaleEnabled')]",
+          "enabled": true,
           "targetResourceUri": "[variables('targetResourceId')]"
         }
       }
