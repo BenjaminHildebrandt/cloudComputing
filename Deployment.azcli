@@ -1,19 +1,64 @@
 #!/bin/bash
 
-# Create App-Service Plan 'free'
-az appservice plan create --name CC18UploadServers --resource-group CloudComputing --sku free
+
+# Create 3 Resource groups
+az group create --location northeurope --name CloudComputingUpload
+az group create --location northeurope --name CloudComputingStream
+az group create --location northeurope --name CloudComputingBalancer
+
+az group deployment create --resource-group CloudComputingUpload --name Test --template-file "https://github.com/debraMin/cloudComputing/Deployment.json"
+
+
+# Create 3 App-Service Plan 'free'
+az appservice plan create --name CC18UploadServers --resource-group CloudComputingUpload --sku free
+az appservice plan create --name CC18StreamServers --resource-group CloudComputingStream --sku free
+az appservice plan create --name CC18LoadBalancers --resource-group CloudComputingBalancer --sku free
+
 
 # Create the Upload server
-az webapp create --name CC18UploadServer --resource-group CloudComputing --plan CC18UploadServers
+az webapp create --name CC18UploadServer --resource-group CloudComputingUpload --plan CC18UploadServers
+
+# Create the Streaming server
+az webapp create --name CC18StreamServer --resource-group CloudComputingStream --plan CC18StreamServers
+
+# Create the Loadbalancer server
+az webapp create --name CC18LoadBalancer --resource-group CloudComputingBalancer --plan CC18LoadBalancers
+
 
 # Set git deployment
-az webapp deployment source config --name CC18UploadServer --resource-group CloudComputing --repo-url https://github.com/BenjaminHildebrandt/cloudComputing --branch uploadServer --manual-integration
+az webapp deployment source config --name CC18UploadServer --resource-group CloudComputingUpload --repo-url https://github.com/BenjaminHildebrandt/cloudComputing --branch uploadServer --manual-integration
+
+az webapp deployment source config --name CC18StreamServer --resource-group CloudComputingStream --repo-url https://github.com/BenjaminHildebrandt/cloudComputing --branch downloadServer --manual-integration
+
+az webapp deployment source config --name CC18LoadBalancer --resource-group CloudComputingBalancer --repo-url https://github.com/BenjaminHildebrandt/cloudComputing --branch loadBalancer --manual-integration
 
 # Synchronize the git
-az webapp deployment source sync --name CC18UploadServer --resource-group CloudComputing
+az webapp deployment source sync --name CC18UploadServer --resource-group CloudComputingUpload
+az webapp deployment source sync --name CC18StreamServer --resource-group CloudComputingStream
+az webapp deployment source sync --name CC18LoadBalancer --resource-group CloudComputingBalancer
+
+
+# Enable autoscaling for the WebApps
+#az monitor autoscale create -g CloudComputing --resource CC18UploadServers --min-count 1 --max-count 5 --count 2
+ #   az monitor autoscale rule create -g CloudComputing --autoscale-name ScaleOut --scale out 1 --condition "Percentage CPU > 75 avg 5m"
+  #  az monitor autoscale rule create -g CloudComputing --autoscale-name ScaleIn --scale in 1 --condition "Percentage CPU < 25 avg 2m"
+
+# Create MySQL-Database and connect it to the servers
+
 
 echo http://UploadServers.azurewebsite.net
 
+
 # Delete WebApp and AppServicePlan
-az webapp delete --name CC18UploadServer --resource-group CloudComputing
-az appservice plan delete --name CC18UploadServers --resource-group CloudComputing
+az webapp delete --name CC18UploadServer --resource-group CloudComputingUpload
+az appservice plan delete --name CC18UploadServers --resource-group CloudComputingUpload
+
+az webapp delete --name CC18StreamServer --resource-group CloudComputingStream
+az appservice plan delete --name CC18StreamServers --resource-group CloudComputingStream
+
+az webapp delete --name CC18LoadBalancer --resource-group CloudComputingBalancer
+az appservice plan delete --name CC18LoadBalancers --resource-group CloudComputingBalancer
+
+az group delete --name CloudComputingUpload
+az group delete --name CloudComputingStream
+az group delete --name CloudComputingBalancer
