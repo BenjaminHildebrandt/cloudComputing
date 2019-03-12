@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <label for="video">Choose a video file:</label>
+    <input type="file" id="video" name="video" accept="video/*">
+
+    <button onclick="putAssets()">Put Assets</button>
+    <button>Get Asset</button>
+    <div id="assets">
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    var assetName = "HelloWorld";
+    var putURL = "https://management.azure.com/subscriptions/50008643-340c-45af-b5f8-9011883b5e39/resourceGroups/mediaServiceCC19Resource/providers/Microsoft.Media/mediaservices/mediaserviceaccountcc19/assets/" + assetName + "?api-version=2018-07-01";
+    var getURL = "";
+    function getAssets() {
+        $.get(getURL, function (data, status) {
+            console.log("Data: " + data + "\nStatus: " + status);
+        });
+    }
+
+    function putAssets() {
+        console.log("Sent");
+        $.ajax({
+            url: putURL,
+            type: 'PUT',
+            data: {
+                "properties": {
+                    "description": "A documentary showing the ascent of Mount Logan",
+                    "storageAccountName": "storage0"
+                }
+            },
+            success: function (data) {
+                console.log('Created Asset \n' + data);
+            }
+        });
+    }
+</script>
