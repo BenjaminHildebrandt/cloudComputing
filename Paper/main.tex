@@ -1,0 +1,76 @@
+\documentclass[english]{lni}
+
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{nameref}
+\usepackage{graphicx}
+
+\begin{document}
+%\title[Cloud Computing: SciTube] {A scientific Video-on-Demand-Solution powered by Microsoft Azure}
+\title{Cloud Computing: SciTube}
+\subtitle{A scientific Video-on-Demand-Solution powered by Microsoft Azure}
+\author[Markus Herche \and Benjamin Hildebrandt]
+{Markus Herche\footnote{Hochschule Fulda, Dept. of Computer Science, Leipziger Straße 123, 36037 Fulda,
+Germany \email{markus.j.herche@cs.hs-fulda.de}} \and
+Benjamin Hildebrandt\footnote{Hochschule Fulda, Dept. of Computer Science, Leipziger Straße 123, 36037 Fulda,
+Germany
+\email{benjamin.hildebrandt@cs.hs-fulda.de}}}
+
+\booktitle{Cloud Computing} % Name of book title
+\year{2018-2019}
+
+
+\maketitle
+
+\begin{abstract}
+    The saying goes that a picture says more than a thousand words. This should apply to scientific papers as well,
+    because why describe e.g. the deformation of a curve, when that can just be shown in a quick video. The following 
+    paper outlines a basic cloud-based video-on-demand-solution with a pay-per-view-model. 
+\end{abstract}
+
+Note: This project made possible through the Microsoft Azure Academic Program.
+
+\section{Prerequisites and Scenario}
+Verlage wollen Geld, Autoren wollen Geld, wir wollen Geld für die Serverkosten\\
+
+Ohne Geld nur Preview, Live-Streaming von Konferenzen und Keynotes, billiger als Ticket + Reise\\
+
+Users can publish Videos and talks and cut out a preview for all users, which together with video ratings should make it easier to decide if you should pay
+They can also decide to make it free for everyone, which introduces ads to at least cover our costs\\
+
+Ähnlich Stack Overflow etc: Community-Moderation durch ausgewiesene Fachkräfte, die Reputation sammeln können
+(zb: Interessierte Profs und Doktoren melden sich mit Nachweis an, erhalten direkt +100 Reputation in ihrem Fachgebiet)
+
+\section{Microsoft Azure Fundamentals}
+Application consists of multiple \glqq building blocks\grqq that can be managed individually.
+They belong to a resource group.
+Configuring can be done via GUI in any Webbrowser or via Azure CLI scripts
+Those can be exported from the GUI for easy reuse, minimizing the risk of missing a checkbox or a specific option
+
+\section{Our Implementation}
+Follows the proposed architecture from Microsoft themselves, then again, what else would you add for VOD.
+\begin{itemize}
+    \item BlobStorage
+    \item AppService
+    \item Streaming Endpoint
+    \item Azure Media Services: Encoding and DRM
+\end{itemize}
+
+\section{Financing}
+Tabelle mit der Kostenaufstellung von Azure, skalierbare Elemente
+in versch. Tiern, also am Anfang nur 100GB BlobStorage, später 1TB, dann 10TB
+Kosten am Anfang (Tier 1): ca. 40 Euro im Monat, also mit einem Hartz4-Satz fast ein Jahr lang bezahlbar
+Finanzierung wird erst ein Problem, wenn viel mehr Content und Traffic anfallen
+
+Kosten: 80/20 Creator / SciTube
+Every view costs: $VideoSize * (Streaming+CDN)$
+Every vid costs: $Size * StoragePrice$
+Every month costs: $AppServiceBasePrice * Throughput$
+
+\section{Future Work}
+CDN can be deployed and used easily but is not really needed right now. 
+Scaling needs to be tested under real conditions (1000 -> 100000 Users), but only bc we need to know what to configure
+Can assume that it works from a technical standpoint, as MS has way more experience
+    
+\end{document}
