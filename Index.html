@@ -1,46 +1,50 @@
-<html>
+<!doctype html>
+<html lang="en" style="height: 100%;">
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <title>Hello, world!</title>
 </head>
 
-<body>
-    <label for="video">Choose a video file:</label>
-    <input type="file" id="video" name="video" accept="video/*">
+<body style="height: 100%;">
+    <div style="padding: 2em; margin: auto; height: 100%; min-height: 100%; display: flex; flex-direction: column;">
+        <div style="border-radius: 10px; display: flex; flex-direction: column; flex: 1; background-color: #e0ebfc;">
+            <div class="container" style="padding: 5% 0% 5% 0%;">
+                <div class="row" style="min-width: 100%;">
+                    <div class="row-sm" style="padding-top: 5%;">
+                        <h1 class="display-4">Cloud Computing</h1>
+                        <p class="lead" style="padding-left: 5%;">This is a Demo how a VOD service can work</p>
+                    </div>
+                    <div class="row-sm" style="width: 60%;">
+                        <img src="./App/Content/Logo-Hochschule-Fulda.png" class="img-fluid" alt="HS Fulda" style="max-width: 500px; max-height: 80px; float: right;">
+                    </div>
+                </div>
+                <hr style="width: 100%; color: #bababa; height: 1px; background-color:#bababa;" />
+                <div class="row">
+                    <div class="row-sm">
+                            <img src="./App/Content/streamIcon.svg" class="img-fluid" alt="Stream Content">
+                    </div>
+                    <div class="row-sm">
 
-    <button onclick="putAssets()">Put Assets</button>
-    <button>Get Asset</button>
-    <div id="assets">
-
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
 </html>
-
-<script>
-    var assetName = "HelloWorld";
-    var putURL = "https://management.azure.com/subscriptions/50008643-340c-45af-b5f8-9011883b5e39/resourceGroups/mediaServiceCC19Resource/providers/Microsoft.Media/mediaservices/mediaserviceaccountcc19/assets/" + assetName + "?api-version=2018-07-01";
-    var getURL = "";
-    function getAssets() {
-        $.get(getURL, function (data, status) {
-            console.log("Data: " + data + "\nStatus: " + status);
-        });
-    }
-
-    function putAssets() {
-        console.log("Sent");
-        $.ajax({
-            url: putURL,
-            type: 'PUT',
-            data: {
-                "properties": {
-                    "description": "A documentary showing the ascent of Mount Logan",
-                    "storageAccountName": "storage0"
-                }
-            },
-            success: function (data) {
-                console.log('Created Asset \n' + data);
-            }
-        });
-    }
-</script>

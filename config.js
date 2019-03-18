@@ -11,4 +11,6 @@ module.exports = {
     aadSecret: "a9a38ab3-d123-4690-9bfe-efc6d28b8f50",
     aadTenantId: "f5b5b48e-059a-4e6e-8348-e42d40095c2b",
     resourceGroup: "mediaServiceCC19Resource",
+    transformName: "mediaEncoding",
+    streamingEndpoint: "cloudCC"
 }
