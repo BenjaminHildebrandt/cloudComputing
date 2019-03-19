@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" style="height: 100%;">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <title>Upload Video</title>
+</head>
+
+<body style="height: 100%;">
+    <div style="padding: 2em; margin: auto; height: 100%; min-height: 100%; display: flex; flex-direction: column;">
+        <div style="border-radius: 10px; display: flex; flex-direction: column; flex: 1; background-color: #e0ebfc;">
+            <div class="container" style="padding: 5% 0% 5% 0%;">
+                <div class="row" style="min-width: 100%;">
+                    <div class="row-sm" style="padding-top: 5%;">
+                        <h1 class="display-2">Cloud Computing</h1>
+                        <p class="lead" style="padding-left: 5%;">Upload a video</p>
+                    </div>
+                    <div class="row-sm" style="width: 40%;">
+                        <img src="../Content/Logo-Hochschule-Fulda.png" class="img-fluid" alt="HS Fulda"
+                            style="max-width: 500px; max-height: 80px; float: right;">
+                    </div>
+                </div>
+                <hr style="width: 100%; color: #bababa; height: 1px; background-color:#bababa;" />
+                <form>
+                        <div class="form-group">
+                            <label for="file">Select file to upload</label>
+                            <input type="file" id="file" accept="video/*">
+                        </div>
+                    <div class="form-group">
+                        <label for="name">Title</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter title">
+                    </div> 
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" class="form-control" id="description" placeholder="Enter description">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

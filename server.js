@@ -14,6 +14,7 @@ const util = require('util');
 
 var app = express();
 var port = 3000;
+var router = express.Router();
 
 // Variables
 const timeoutSeconds = 60 * 10;
@@ -54,6 +55,7 @@ app.Video.sync();
 app.User.sync();
 
 // Create the connection to Azure
+/*
 msRestAzure.loginWithServicePrincipalSecret(
   config.aadClientId, //appId
   config.aadSecret, //secret
@@ -126,31 +128,7 @@ msRestAzure.loginWithServicePrincipalSecret(
       console.log(err);
     }
   }
-)
-
-// Send index page
-app.get('/', (req, res) => {
-
-});
-
-
-app.get('/Assets', (req, res) => {
-  res.end({ "data": "hello world" });
-});
-
-app.post('/createAssets', (req, res) => {
-  res.send({ "data": "success" });
-});
-
-
-
-// Start server
-app.listen(port, (err) => {
-  if (err) {
-    return console.log('something bad happened', err);
-  }
-  console.log(`server is listening on ${port}`);
-})
+) */
 
 async function waitForJobToFinish(jobName) {
   let timeout = new Date();
@@ -276,3 +254,37 @@ async function ensureTransformExists(transformName, preset) {
   }
   return transform;
 }
+
+// ROUTES
+// Send index page
+router.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname + '/App/index.html'));
+});
+
+// Send stream page
+router.get('/stream', (req, res) => {
+  res.sendFile(path.join(__dirname + '/App/Views/Stream.html'));
+});
+
+// Send upload page
+router.get('/upload', (req, res) => {
+  res.sendFile(path.join(__dirname + '/App/Views/Upload.html'));
+});
+
+// Create a new asset
+router.post('/upload', (req, res) => {
+  res.end('Uploaded suceed');
+});
+
+app.use('/App/Content/', express.static(__dirname + '/App/Content/'));
+app.use('/App/Views/', express.static(__dirname + '/App/Views/'));
+
+app.use('/', router);
+
+// Start server
+app.listen(port, (err) => {
+  if (err) {
+    return console.log('something bad happened', err);
+  }
+  console.log(`server is listening on ${port}`);
+});
