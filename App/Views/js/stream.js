@@ -15,7 +15,14 @@ $('document').ready(() => {
     });
 
     // Get all videos from server
-    
+    $.ajax({
+        url: "/videos",
+        success: function (videos) {
+            videos.forEach(video => {
+                addVideo(video);
+            });
+        }
+    });
 });
 
 function changeURL(url){
@@ -30,7 +37,7 @@ function changeURL(url){
 
 function addVideo(video) {
     let newVideo = document.createElement("a");
-    newVideo.innerHTML = video.title;
+    newVideo.innerHTML = video.title + " - " + video.description;
     newVideo.setAttribute("href", "#");
     newVideo.setAttribute("onclick", "javascript:changeURL('" + video.path + "')")
     document.getElementById('videoList').append(newVideo);

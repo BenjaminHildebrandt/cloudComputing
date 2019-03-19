@@ -6,15 +6,20 @@ var azureStorage = require('azure-storage');
 var Sequelize = require('sequelize');
 var bodyParser = require('body-parser');
 var async = require('async');
+var fs = require('fs');
 const uuidv4 = require('uuid/v4');
 const path = require('path');
 const url = require('url');
 const util = require('util');
+const fileUpload = require('express-fileupload');
+const asyncHandler = require('express-async-handler');
 
 
-var app = express();
+const app = express();
 var port = 3000;
 var router = express.Router();
+
+app.use(fileUpload());
 
 // Variables
 const timeoutSeconds = 60 * 10;
@@ -31,6 +36,7 @@ const sequelize = new Sequelize(config.db, 'cloudComp19', 'cloudComp2019', {
   host: config.dbHost,
   dialect: 'mssql',
   dialectOptions: {
+    port: undefined,
     encrypt: true
   },
   logging: false,
@@ -55,7 +61,7 @@ app.Video.sync();
 app.User.sync();
 
 // Create the connection to Azure
-/*
+
 msRestAzure.loginWithServicePrincipalSecret(
   config.aadClientId, //appId
   config.aadSecret, //secret
@@ -70,65 +76,20 @@ msRestAzure.loginWithServicePrincipalSecret(
       console.log("Error while connecting to azure");
     }
     console.log("Connected to azure");
-
     amsClient = new msMng(credentials, config.subscriptionId, config.armEndpoint, { noRetryPolicy: true });
-    try {
-      //Get file extension
-      if (inputFile) {
-        inputExtension = path.extname(inputFile);
-      } else {
-        inputExtension = path.extname(inputUrl);
-      }
 
+    try {
       console.log("creating encoding transform...");
       let adaptiveStreamingTransform = {
         odatatype: "#Microsoft.Media.BuiltInStandardEncoderPreset",
         presetName: "AdaptiveStreaming"
       };
       let encodingTransform = await ensureTransformExists(adaptiveStreamingTransform);
-
-      console.log("getting job input from arguments...");
-      let uniqueness = uuidv4().slice(0,6);
-      let input = await getJobInputFromArguments(uniqueness);
-      let outputAssetName = namePrefix + '-output-' + uniqueness;
-      let jobName = namePrefix + '-job-' + uniqueness;
-      let locatorName = "locator" + uniqueness;
-
-      console.log("creating output asset...");
-      let outputAsset = await createOutputAsset(outputAssetName);
-
-      console.log("submitting job...");
-      let job = await submitJob(jobName, input, outputAsset.name);
-
-      console.log("waiting for job to finish...");
-      job = await waitForJobToFinish(jobName);
-
-      if (job.state == "Finished") {
-        let locator = await createStreamingLocator(outputAsset.name, locatorName);
-
-        let urls = await getStreamingUrls(locator.name);
-
-        console.log("deleting jobs ...");
-        await amsClient.jobs.deleteMethod(config.resourceGroup, config.accountName, config.transformName, jobName);
-
-        let jobInputAsset = input;
-        if (jobInputAsset && jobInputAsset.assetName) {
-          await amsClient.assets.deleteMethod(config.resourceGroup, config.accountName, jobInputAsset.assetName);
-        }
-      } else if (job.state == "Error") {
-        console.log(`${job.name} failed. Error details:`);
-        console.log(job.outputs[0].error);
-      } else if (job.state == "Canceled") {
-        console.log(`${job.name} was unexpectedly canceled.`);
-      } else {
-        console.log(`${job.name} is still in progress.  Current state is ${job.state}.`);
-      }
-      console.log("done with sample");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error("No encoding transform found!");
     }
   }
-) */
+);
 
 async function waitForJobToFinish(jobName) {
   let timeout = new Date();
@@ -165,20 +126,12 @@ async function submitJob(jobName, jobInput, outputAssetName) {
   });
 }
 
-
-async function getJobInputFromArguments(uniqueness) {
-  if (inputFile) {
-    let assetName = namePrefix + "-input-" + uniqueness;
-    await createInputAsset(assetName, inputFile);
-    return {
-      odatatype: "#Microsoft.Media.JobInputAsset",
-      assetName: assetName
-    }
-  } else {
-    return {
-      odatatype: "#Microsoft.Media.JobInputHttp",
-      files: [inputUrl]
-    }
+async function getJobInputFromArguments(uniqueness, file) {
+  let assetName = namePrefix + "-input-" + uniqueness;
+  await createInputAsset(assetName, file);
+  return {
+    odatatype: "#Microsoft.Media.JobInputAsset",
+    assetName: assetName
   }
 }
 
@@ -231,6 +184,7 @@ async function createStreamingLocator(assetName, locatorName) {
 
 // Get urls for streaming content
 async function getStreamingUrls(locatorName) {
+  let url;
   let streamingEndpoint = await amsClient.streamingEndpoints.get(config.resourceGroup, config.accountName, config.streamingEndpoint);
 
   let paths = await amsClient.streamingLocators.listPaths(config.resourceGroup, config.accountName, locatorName);
@@ -239,6 +193,7 @@ async function getStreamingUrls(locatorName) {
     let path = paths.streamingPaths[i].paths[0];
     console.log("https://" + streamingEndpoint.hostName + "//" + path);
   }
+  return "//" + streamingEndpoint.hostName + "/" + paths.streamingPaths[paths.streamingPaths.length - 1].paths[0];
 }
 
 async function ensureTransformExists(transformName, preset) {
@@ -266,17 +221,104 @@ router.get('/stream', (req, res) => {
   res.sendFile(path.join(__dirname + '/App/Views/Stream.html'));
 });
 
+router.get('/videos', async (req, res) => {
+  var output = [];
+  await app.Video.findAll().then(videos => {
+    //Cut output
+    videos.forEach(video => {
+      output.push({
+        title: video.name,
+        description: video.description,
+        url: video.path
+      });
+    });
+  });
+  res.contentType('application/json');
+  res.end(JSON.stringify(output));
+});
+
 // Send upload page
 router.get('/upload', (req, res) => {
   res.sendFile(path.join(__dirname + '/App/Views/Upload.html'));
 });
 
 // Create a new asset
-router.post('/upload', (req, res) => {
-  res.end('Uploaded suceed');
+router.post('/upload', async function (req, res) {
+  if (Object.keys(req.files).length == 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+  let video = req.files.video;
+  let name = req.body.title;
+  let description = req.body.description;
+  let type = req.files.video.mimetype.split("/")[1];
+  let path = __dirname + '/App/temp/' + name + "." + type;
+
+  video.mv(path, async (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    try {
+      //Create asset on azure
+      console.log("getting job input from arguments...");
+      let uniqueness = uuidv4().split(0,6)[1];
+      let input = await getJobInputFromArguments(uniqueness, path);
+      let outputAssetName = namePrefix + '-output-' + uniqueness;
+      let jobName = namePrefix + '-job-' + uniqueness;
+      let locatorName = "locator" + uniqueness;
+
+      console.log("creating output asset...");
+      let outputAsset = await createOutputAsset(outputAssetName);
+
+      //Create job on azure    
+      console.log("submitting job...");
+      let job = await submitJob(jobName, input, outputAsset.name);
+
+      console.log("waiting for job to finish...");
+      job = await waitForJobToFinish(jobName);
+
+      var url;
+      if (job.state == "Finished") {
+        let locator = await createStreamingLocator(outputAsset.name, locatorName);
+
+        url = await getStreamingUrls(locator.name);
+
+        console.log("deleting jobs ...");
+        await amsClient.jobs.deleteMethod(config.resourceGroup, config.accountName, config.transformName, jobName);
+
+        let jobInputAsset = input;
+        if (jobInputAsset && jobInputAsset.assetName) {
+          await amsClient.assets.deleteMethod(config.resourceGroup, config.accountName, jobInputAsset.assetName);
+        }
+      } else if (job.state == "Error") {
+        console.log(`${job.name} failed. Error details:`);
+        console.log(job.outputs[0].error);
+      } else if (job.state == "Canceled") {
+        console.log(`${job.name} was unexpectedly canceled.`);
+      } else {
+        console.log(`${job.name} is still in progress.  Current state is ${job.state}.`);
+      }
+
+      //Write to testuser
+      app.User.findOrCreate({where: {username: 'test-user'}, defaults: {
+        email: "max_mustermann@hsfulda.de",
+        firstname: "Max",
+        secondname: "Mustermann"
+      }}).then(([user, created]) => {
+        //Write to video
+        app.Video.create({name: name, length: 0, size: req.files.video.size, format: type, path: url, userId: user.id}).then((video)=>{
+          fs.unlink(path, (err) => {
+            console.log("deleted");
+          });
+        });
+      });
+    } catch (error) {
+      console.error("Error while uploading on azure: " + error);
+    }
+    res.redirect('/upload');
+  });
 });
 
-app.use('/App/Content/', express.static(__dirname + '/App/Content/'));
+app.use('/App/Images/', express.static(__dirname + '/App/Images/'));
 app.use('/App/Views/', express.static(__dirname + '/App/Views/'));
 
 app.use('/', router);

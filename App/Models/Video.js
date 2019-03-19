@@ -6,8 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true
         },
         name: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.STRING
         },
         length: {
             type: DataTypes.INTEGER
@@ -19,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         path: {
+            type: DataTypes.STRING
+        },
+        description: {
             type: DataTypes.STRING
         }
     });
