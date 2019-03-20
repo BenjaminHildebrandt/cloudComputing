@@ -14,7 +14,7 @@
 %\usepackage{xcolor}
 \usepackage{array}   % table col width in tabular {}
 \usepackage[normalem]{ulem}
-\useunder{\uline}{\ul}{}
+
 
 % \addbibresource{mybibfile}    % lni.dtx  Z.615ff
 
@@ -100,7 +100,7 @@ Using CDN is preferable, because ``When Azure CDN is not enabled for Media Servi
 % https://azure.microsoft.com/en-us/pricing/details/cdn/   vs   https://azure.microsoft.com/en-us/pricing/details/bandwidth/
 While at first the pricing for both is near identical, it's the range from the 50th on to the 150th TB in one month that already shows the disparity: \$0.07 per GB through standard file transfer vs  \$0.0037 via CDN.
 
-According to an online filesize calculator\footnote{https://toolstud.io/video/filesize.php?imagewidth=1920&imageheight=1080&framerate=25&timeduration=60&timeunit=minutes} a 25 FPS FullHD-Video of 20 minutes length would estimate to around 1 GB in size (average between \textit{YoutubeHD} and \textit{NetflixHD} with a necessary bandwidth of 8Mbps (1MB/s) in case of \textit{YoutubeHD} bitrate. 
+According to an online filesize calculator \footnote{\url{https://toolstud.io/video/filesize.php}} a 25 FPS FullHD-Video of 20 minutes length would estimate to around 1 GB in size (average between \textit{YoutubeHD} and \textit{NetflixHD} with a necessary bandwidth of 8Mbps (1MB/s) in case of \textit{YoutubeHD} bitrate.  % ?imagewidth=1920&imageheight=1080&framerate=25&timeduration=60&timeunit=minutes
 Assume that after a good start there are now 100 videos as the one described before. A total of 500 visitors arrive each month and watch 2 videos each: $(500 \ast 2 GB) = 1TB$ Streaming Throughput and $(500 \ast 2 \ast 20 min)  = 2000$ minutes (33,33 hours) of streamed video. (1000GB * 0,08ct) = 80 dolurs
 The necessary blob storage amounts to $100 \ast 1GB = 100GB$. 
 Let's also assume we receive 10 new videos each month, which results in an encoding output of $(10 \ast 20 mins) = 200$ minutes (6.75 dolurs).  
@@ -117,12 +117,15 @@ Every month costs: $AppServiceBasePrice * Throughput$
 CDN can be deployed and used easily but is not really needed right now. 
 Scaling needs to be tested under real conditions (1000 -> 100000 Users), but only bc we need to know what to configure
 Can assume that it works from a technical standpoint, as MS has way more experience
-    
+    % https://medium.com/@Traverous/the-tale-of-how-we-built-on-demand-streaming-for-traverous-on-azure-media-services-87e32f6a98d0
+    %  https://devblogs.microsoft.com/premier-developer/how-to-setup-live-streaming-server-using-azure-media-service-in-less-than-30-mins/
+    % https://docs.microsoft.com/de-de/azure/media-services/previous/media-services-streaming-endpoints-overview
 \newpage
 \appendix
 
 \input{table_extimate_tier1_no_colors}
-\input{table_extimate_tier1_2}
+%\input{table_extimate_tier1_2}
+
 \bibliography{mybibfile}
 
 \end{document}
