@@ -36,9 +36,12 @@ function changeURL(url){
 }
 
 function addVideo(video) {
+    let container = document.createElement("p");
+    container.setAttribute("style", "margin: 0;");
     let newVideo = document.createElement("a");
     newVideo.innerHTML = video.title + " - " + video.description;
     newVideo.setAttribute("href", "#");
-    newVideo.setAttribute("onclick", "javascript:changeURL('" + video.path + "')")
-    document.getElementById('videoList').append(newVideo);
+    newVideo.setAttribute("onclick", "javascript:changeURL('" + video.url + "')");
+    container.append(newVideo);
+    document.getElementById('videoList').append(container);
 }

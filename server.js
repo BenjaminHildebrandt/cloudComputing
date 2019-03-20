@@ -192,8 +192,10 @@ async function getStreamingUrls(locatorName) {
   for (let i = 0; i < paths.streamingPaths.length; i++) {
     let path = paths.streamingPaths[i].paths[0];
     console.log("https://" + streamingEndpoint.hostName + "//" + path);
+    if(i == paths.streamingPaths.length - 1)
+      url = "//" + streamingEndpoint.hostName + path;
   }
-  return "//" + streamingEndpoint.hostName + "/" + paths.streamingPaths[paths.streamingPaths.length - 1].paths[0];
+  return "//" + streamingEndpoint.hostName + "//" + paths.streamingPaths[paths.streamingPaths.length - 1].paths[0];
 }
 
 async function ensureTransformExists(transformName, preset) {
@@ -305,7 +307,7 @@ router.post('/upload', async function (req, res) {
         secondname: "Mustermann"
       }}).then(([user, created]) => {
         //Write to video
-        app.Video.create({name: name, length: 0, size: req.files.video.size, format: type, path: url, userId: user.id}).then((video)=>{
+        app.Video.create({name: name, length: 0, size: req.files.video.size, format: type, path: url, userId: user.id, description: req.body.description}).then((video)=>{
           fs.unlink(path, (err) => {
             console.log("deleted");
           });
