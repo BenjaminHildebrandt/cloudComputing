@@ -1,9 +1,0 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
-The style file: lni.bst
-Database file #1: mybibfile.bib
-Warning--empty journal in nistCloud
-ptr=1, stack=
-
----the literal stack isn't empty for entry nistCloud
-while executing---line 1279 of file lni.bst
-(There was 1 error message)

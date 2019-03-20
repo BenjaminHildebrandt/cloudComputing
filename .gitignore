@@ -2,3 +2,4 @@ node_modules/
 Paper/*.log
 Paper/*.pdf
 .vscode/
+App/temp/*
