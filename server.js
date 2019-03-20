@@ -57,8 +57,9 @@ app.Video.belongsTo(app.User); // Adds a field userId to video
 app.User.hasMany(app.Video, { as: 'Videos' }); // Need to check what this does
 
 // Create the tables if not set up
-app.Video.sync();
-app.User.sync();
+sequelize.sync();
+//app.Video.sync();
+//app.User.sync();
 
 // Create the connection to Azure
 
