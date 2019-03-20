@@ -1,3 +1,7 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{Me11}
+
+\bibitem[Me11]{nistCloud}
+Mell, Peter; Grance, Tim et~al.: The NIST definition of cloud computing.
+\newblock 2011.
 
 \end{thebibliography}
