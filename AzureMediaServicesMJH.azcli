@@ -1,0 +1,51 @@
+rem !/bin/bash
+
+rem Create Resource Group
+az group create --name mediaServiceCC19Resource --location northeurope
+
+rem Create Blob Storage
+az storage account create --name mjhservicestoragecc19 --kind StorageV2 --sku Standard_LRS --location northeurope --resource-group mediaServiceCC19Resource
+
+rem Enable CORS for storage account
+az storage cors add --account-name mjhservicestoragecc19 --methods GET PUT --origins * --services b --allowed-headers *
+
+rem Create Media Service Account
+az ams account create --name mjhserviceaccountcc19 --resource-group mediaServiceCC19Resource --storage-account mjhservicestoragecc19 --location northeurope
+
+rem Create a streaming endpoint
+az ams streaming-endpoint create --account-name mjhserviceaccountcc19 --name cloudCC --resource-group mediaServiceCC19Resource --scale-units 0
+
+rem Start streaming endpoint
+az ams streaming-endpoint start --name cloudCC --account-name mjhserviceaccountcc19 --resource-group mediaServiceCC19Resource
+
+rem Enable adaptive bitrate encoding
+az ams transform create --name mediaEncoding --preset AdaptiveStreaming --description "enables adaptive Bitrate Encoding" --resource-group mediaServiceCC19Resource -a mjhserviceaccountcc19
+
+rem Create Database for video information
+rem Create DB-server
+az sql server create --name mjhdatabaseservercc19 --resource-group mediaServiceCC19Resource --location northeurope --admin-user cloudComp19 --admin-password cloudComp2019
+
+rem Create firewall rule
+az sql server firewall-rule create --resource-group mediaServiceCC19Resource --server mjhdatabaseservercc19 -n AllowYourIp --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
+
+rem Create DB
+az sql db create --resource-group mediaServiceCC19Resource --name databaseCloudComputing --server mjhdatabaseservercc19 --service-objective Basic
+
+rem #Create ad principle
+rem #az ams account sp create --account-name mjhserviceaccountcc19 --resource-group mediaServiceCC19Resource
+rem #az ad sp create-for-rbac
+
+rem Create app service plan for web application
+az group deployment create --resource-group mediaServiceCC19Resource --name VoDCloudComputingPlan --template-file DeploymentMJH.json
+
+rem Creat a app service
+az webapp create --name VoDCloudComputing --resource-group mediaServiceCC19Resource --plan VoDCloudComputingPlan
+
+rem Set deploy source from repository
+az webapp deployment source config --name VoDCloudComputing --resource-group mediaServiceCC19Resource --repo-url https://github.com/BenjaminHildebrandt/cloudComputing --branch webservice-live --manual-integration
+
+rem  Synchronize the repository
+az webapp deployment source sync --name VoDCloudComputing --resource-group mediaServiceCC19Resource
+
+rem Delete everything at once
+az group delete --name mediaServiceCC19Resource --yes
