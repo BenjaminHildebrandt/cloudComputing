@@ -4,7 +4,7 @@
     "parameters": {
       "svcPlanName": {
         "type": "string",
-        "defaultValue": "CC18UploadServers",
+        "defaultValue": "VoDCloudComputingPlan",
         "metadata": {
           "description": "The name of the App Service plan."
         }
