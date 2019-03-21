@@ -16,7 +16,7 @@ const asyncHandler = require('express-async-handler');
 
 
 const app = express();
-var port = 3000;
+var port = process.env.PORT;
 var router = express.Router();
 
 app.use(fileUpload());
