@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    <!-- jQuery first, then Popper.js, then Bootstrap JS         !!! JQuery Slim doesnt have ajax !!! -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" 
+        integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" 
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -20,22 +23,33 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="./js/upload.js"></script>
     <title>Upload Video</title>
 </head>
 
 <body style="height: 100%;">
     <div style="padding: 2em; margin: auto; height: 100%; min-height: 100%; display: flex; flex-direction: column;">
-        <div style="border-radius: 10px; display: flex; flex-direction: column; flex: 1; background-color: #e0ebfc;">
+        <div style="border-radius: 10px; display: block; flex-direction: column; flex: 1; background-color: #e0ebfc;">
             <div class="container" style="padding: 5% 0% 5% 0%;">
                 <div class="row" style="min-width: 100%;">
+                    <div class="row-sm" style="width: 60%;">
+                        <a href="/">
+                            <img src="../Images/logo_sci-tube_alpha.png" class="img-fluid" alt="SciTube Logo"
+                            style="max-width: 500px; max-height: 80px; float: left;">
+                        </a>
+                        <img src="../Images/Logo-Hochschule-Fulda.png" class="img-fluid" alt="HS Fulda"
+                        style="max-width: 500px; max-height: 80px; float: right;">
+                    </div>
                     <div class="row-sm" style="padding-top: 5%;">
                         <h1 class="display-2">Cloud Computing</h1>
                         <p class="lead" style="padding-left: 5%;">Upload a video</p>
                     </div>
+                    <!--
                     <div class="row-sm" style="width: 40%;">
                         <img src="../Images/Logo-Hochschule-Fulda.png" class="img-fluid" alt="HS Fulda"
                             style="max-width: 500px; max-height: 80px; float: right;">
                     </div>
+                    -->
                 </div>
                 <hr style="width: 100%; color: #bababa; height: 1px; background-color:#bababa;" />
                 <form ref="uploadForm" id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
@@ -51,8 +65,19 @@
                         <label for="description">Description</label>
                         <input type="text" name="description" class="form-control" id="description" placeholder="Enter description">
                     </div>
-                    <input type="submit">
+                    <!-- <input type="submit">   -->
+                    <input type="button" value="Send" onclick=send()>
                 </form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                <span class="sr-only"></span>
+                            </div>
+                            <div id="status"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
