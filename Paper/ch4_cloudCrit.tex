@@ -1,0 +1,11 @@
+As defined by the US-based \textit{National Institute of Standards and Technology} (NIST) a cloud service must fulfill
+certain criteria \cite{nistCloud}. This section gives a brief overview and reviews the application's fulfillment of each.
+\begin{itemize}
+    \item \textbf{On-Demand Self Service:} Users can create and scale resources through the aforementioned (ch2) user interfaces at any time and to any capacity they desire. Only starting up and allocating resources takes some time.
+    \item \textbf{Broad Network Access:} Provided, as Microsoft holds a global server network and content can be delivered as HTML to be viewed in browsers on supporting devices.
+    \item \textbf{Resource Pooling:} Resources can be organized in logical groups, but that's not the point. Resources of the provider are shared between multiple users, called 'tenants'.
+    \item \textbf{Rapid Elasticity:} illusion of infinite resources \& scaling: provided by Azure as far as end users are concerned because everyone demands it. so MS has a trained 
+    crew steadily working to administrate farms\\
+    autoscaling however is only horizontally (more/less instances of the same resource). Vertical scaling (more powerful versions of instances) requires manual action, especially because the shift in price between tiers can be dramatic.
+    \item \textbf{Measured Services:} provided by azure: Insights and Billing, Alerts
+\end{itemize}

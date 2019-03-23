@@ -1,0 +1,23 @@
+Microsoft offers both \textit{Infrastructure} and \textit{Platform} as a Service through Microsoft
+Azure for customers to use and implement Software as a Service. Management functionality itself is
+provided as SaaS as well (accessible through Webbrowser and REST-API).
+Applications consist of multiple \glqq building blocks\grqq that can be managed individually, 
+but organazied together in \textit{resource groups}. \\
+Managing and Configuring can be done via GUI in any Webbrowser through the Azure portal
+\footnote{\url{portal.azure.com}}
+or through \textit{Azure CLI} (Command Line Interface) scripts (similar to Shell- or Batch-scripts). Those can be exported from the GUI for easy reuse, 
+minimizing the risk of missing a checkbox or a specific option. To run such scripts locally, 
+it's necessary to install software
+\footnote{\url{https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest}}
+, which introduces platform-dependency. Parameters for options 
+can be enclosed in high commas on Linux-systems, but must be put in double quotes on Windows.
+
+Azure CLI commands (for the most part) have the following pattern:\\
+\textit{az [resource-type] [action] [--option 'parameters'] [further options]}\\
+Upon execution they either terminate with an error message or by printing a JSON received from
+Azure on success, offering details about the performed action.
+% Lästig: manche Bezeichner (zb für Storage Accounts, logischerweise AppService für die Subdomain) müssen in Azure eindeutig sein, manche nur innerhalb der eigenen Ressourcensammlung\cite{azNaming}. erschwert kollaboration und versionierung, wenn skripte sich durch namen unterscheiden 
+% Unterschiede zwischen Bash und cmd-Skripten (azcli on Windows vs Linux bzw. WSL) bei parametern: Hochkommata vs Anführungszeichen
+% AZCLI-Kommandos beginnen mit az, geben dann (ggf. Ressourcentyp) und die Aktion an. Als Antwort gibt es JSON mit Komplettinfos über die erstellte Instanz.
+\textit{Deployment.json} wird zum Erstellen einer \textit{Deployment Group} verwendet, aus der dann der AppService erstellt wird.
+TODO
