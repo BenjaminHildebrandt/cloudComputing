@@ -1,0 +1,20 @@
+\section{Microsoft Azure Fundamentals}\label{sec:ch2}Microsoft offers both \textit{Infrastructure} and \textit{Platform} as a Service through Microsoft Azure for customers to use and implement Software as a Service. Management functionality itself is provided as SaaS as well (accessible through Webbrowser and REST-API). Applications consist of multiple \glqq building blocks\grqq{} that can be managed individually, but organized together in \textit{resource groups}. These are groups for sorting and encapsulating different services or parts of one service. Every other component have to be in such a \textit{resource group}. 
+
+Managing and Configuring can be done via GUI in any Webbrowser through the Azure portal \footnote{\url{portal.azure.com}} or through \textit{Azure CLI} (Command Line Interface) scripts (similar to Shell- or Batch-scripts). Those can be exported from the GUI for easy reuse, minimizing the risk of missing a checkbox or a specific option. To run such scripts locally, it's necessary to install software \footnote{\url{https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest}}, which introduces platform-dependency. Parameters for options can be enclosed in high commas on Linux-systems, but must be put in double quotes on Windows.
+
+Azure CLI commands (for the most part) have the following pattern:\\
+\texttt{az [resource-type] [action] [--option 'parameters'] [further options]}\\
+Upon execution they either terminate with an error message or by printing a JSON received from Azure on success, offering details about the performed action.
+% Lästig: manche Bezeichner (zb für Storage Accounts, logischerweise AppService für die Subdomain) müssen in Azure eindeutig sein, manche nur innerhalb der eigenen Ressourcensammlung\cite{azNaming}. erschwert kollaboration und versionierung, wenn skripte sich durch namen unterscheiden 
+% Unterschiede zwischen Bash und cmd-Skripten (azcli on Windows vs Linux bzw. WSL) bei parametern: Hochkommata vs Anführungszeichen
+% AZCLI-Kommandos beginnen mit az, geben dann (ggf. Ressourcentyp) und die Aktion an. Als Antwort gibt es JSON mit Komplettinfos über die erstellte Instanz
+
+Azure provides many service solutions where one is a Video-on-demand service. This implementation is shown in figure \ref{fig:arch_new} and contains the following cloud components\footnote{\url{https://azure.microsoft.com/en-gb/solutions/architecture/digital-media-video/}}:
+\begin{itemize}
+    \item \textbf{BlobStorage:} Can store a large amount of unstructured data and can be accessed from anywhere by using http or https. Here the files will be stored.
+    \item \textbf{Streaming Endpoint:} Deliveres content directly to a player application or to a content-delivery network (CDN).
+    \item \textbf{Azure Encoder:} Creates jobs, which convert media files from one encoding to another.
+    \item \textbf{Azure CDN:} Delivers content with a broad global reach.
+    \item \textbf{Azure Media Player:} A player application which can be used to directly stream media files from \textit{Streaming Endpoints}.
+    \item \textbf{Multi-DRM content protection:} Multi-DRM or AES clear key encryption.
+\end{itemize}

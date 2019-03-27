@@ -1,0 +1,11 @@
+\section{Future Work}\label{sec:ch6}
+%CDN can be deployed and used easily but is not really needed right now. Scaling needs to be tested under real conditions (1000 -> 100000 Users), but only bc we need to know what to configure. Can assume that it works from a technical standpoint, as MS has way more experience
+    % https://medium.com/@Traverous/the-tale-of-how-we-built-on-demand-streaming-for-traverous-on-azure-media-services-87e32f6a98d0
+    %  https://devblogs.microsoft.com/premier-developer/how-to-setup-live-streaming-server-using-azure-media-service-in-less-than-30-mins/
+    % https://docs.microsoft.com/de-de/azure/media-services/previous/media-services-streaming-endpoints-overview
+%In der Zukunft muss sich über ein Finanzierungsmodell gedanken gemacht werden. Ein möglicher Ansatz ist eine Mischung aus Werbefinanzierung und Abonement, ähnlich des Modells von Spotify. Eine Einteilung der Benutzer in Premium und Freemium ist von nöten. Freemium-User bekommen in regelmäßigen Abständen Werbung zu sehen, während Premium-User keine Werbung erhalten, aber monatlich einen finanziellen Beitrag bezahlen müssen.
+%Ebenfalls muss die Verteilung des Inhalts von einem Storage über ein CDN-Netzwerk von statten gehen. Dies ermöglicht den weltweit schnellen Zugriff auf Inhalte ohne große Verzögerungen. 
+
+In the future, a final financing plan must be implemented. Some attempts were already discussed in the previous chapter. Instead of using one plan straight, after aquiring user (financing by advertising), a subscription model can be implemented. 
+On the technical side, a CDN component should be implemented for a broad global reach and to minimize the costs as mentioned in chapter \ref{sec:ch5}. Also scaling needs to be tested under real conditions to find out the indicating parameter.
+On one hand uploading the file from the user directly to the Azure Media Service would increase the performance of the application aswell. On the other hand it would decrease the quality of service.

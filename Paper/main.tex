@@ -6,10 +6,10 @@
 \usepackage{nameref}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage{adjustbox}
 
 %nothing works related to colored tables
 %\PassOptionsToPackage[table]{xcolor}
-\usepackage{lscape}
 %\usepackage[table]{xcolor}  % https://tex.stackexchange.com/questions/83101/option-clash-for-package-xcolor
 %\usepackage{xcolor}
 \usepackage{array}   % table col width in tabular {}
@@ -53,33 +53,31 @@ Germany
 
 Note: This project made possible through the Microsoft Azure Academic Program.
 
-\section{Prerequisites and Scenario}
-\input{ch1_prereq_scenario}
-\section{Microsoft Azure Fundamentals}
-\input{ch2_az_fundamentals}
+\input{chapter/ch1_prereq_scenario}
+\input{chapter/ch2_az_fundamentals}
+\input{chapter/ch3_impl}
+\input{chapter/ch4_cloudCrit}
+\input{chapter/ch5_finance}
+\input{chapter/ch6_future_work}
 
-\section{Our Implementation}
-\input{ch3_impl}
-\section{Evaluation of cloud criteria}
-\input{ch4_cloudCrit}
-\section{Financing}
-\input{ch5_finance}
-\section{Future Work}
-CDN can be deployed and used easily but is not really needed right now. 
-Scaling needs to be tested under real conditions (1000 -> 100000 Users), but only bc we need to know what to configure
-Can assume that it works from a technical standpoint, as MS has way more experience
-    % https://medium.com/@Traverous/the-tale-of-how-we-built-on-demand-streaming-for-traverous-on-azure-media-services-87e32f6a98d0
-    %  https://devblogs.microsoft.com/premier-developer/how-to-setup-live-streaming-server-using-azure-media-service-in-less-than-30-mins/
-    % https://docs.microsoft.com/de-de/azure/media-services/previous/media-services-streaming-endpoints-overview
 \newpage
 \appendix
 
-\input{table_extimate_tier1_no_colors}
-\input{table_extimate_tier1_2}
- \newpage
- \input{table_estimate_tier_premium.tex}
+%tables
+\section*{Tables}
+\input{chapter/table_extimate_tier1_no_colors}
+\newpage
+\input{chapter/table_extimate_tier1_2}
+\newpage
 
-
+%images
+\section*{Images}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth, height=180px]{ressources/architecture_ms.png}
+    \caption{Microsofts proposed VoD architecture}
+    \label{fig:arch_ms}
+\end{figure}
 % plain bibtex:
 %\bibliographystyle{lni}
 %\bibliography{mybibfile}

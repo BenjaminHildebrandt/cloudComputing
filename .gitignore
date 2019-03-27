@@ -1,4 +1,4 @@
 node_modules/
 Paper/*.log
-Paper/*.pdf
+Paper/*.out
 .vscode/

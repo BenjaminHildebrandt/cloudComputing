@@ -1,3 +1,4 @@
+\section{Financing}\label{sec:ch5}
 % Tabelle mit der Kostenaufstellung von Azure, skalierbare Elemente
 % in versch. Tiern, also am Anfang nur 100GB BlobStorage, später 1TB, dann 10TB
 % Kosten am Anfang (Tier 1): ca. 40 Euro im Monat, also mit einem Hartz4-Satz fast ein Jahr lang bezahlbar
@@ -9,14 +10,17 @@ While at first the pricing for both is near identical, it's the range from the 5
 Bandwidth and CDN are also priced differently depending on region
 
 According to an online filesize calculator \footnote{\url{https://toolstud.io/video/filesize.php}} a 25 FPS FullHD-Video of 20 minutes length would estimate to around 1 GB in size (average between \textit{YoutubeHD} and \textit{NetflixHD} with a necessary bandwidth of 8Mbps (1MB/s) in case of \textit{YoutubeHD} bitrate.  % ?imagewidth=1920&imageheight=1080&framerate=25&timeduration=60&timeunit=minutes
-Assume that after a good start there are now 100 videos as the one described before. A total of 500 visitors arrive each month and watch 2 videos each: $(500 \ast 2 GB) = 1TB$ Streaming Throughput and $(500 \ast 2 \ast 20 min)  = 2000$ minutes (33,33 hours) of streamed video. (1000GB * 0,08ct) = 80 dolurs
-The necessary blob storage amounts to $100 \ast 1GB = 100GB$. 
-Let's also assume we receive 10 new videos each month, which results in an encoding output of $(10 \ast 20 mins) = 200$ minutes (6.75 dolurs).  
+Assume that after a good start there are now 100 videos as the one described before. A total of 500 visitors arrive each month and watch 2 videos each: $(500 \ast 2 GB) = 1TB$ Streaming Throughput and $(500 \ast 2 \ast 20 min)  = 2000$ minutes (33,33 hours) of streamed video. (1000GB * 0,08ct) = 80 dollar The necessary blob storage amounts to $100 \ast 1GB = 100GB$. Let's also assume we receive 10 new videos each month, which results in an encoding output of $(10 \ast 20 mins) = 200$ minutes (6.75 dollar).  
 
-This brings us to a rough estimate (appsrv+streaming + encoding + storage) of 130 dolls each month. Spreading the costs to the users means every user uses services worth (130 / 500) = 0,26ct. If we omit the costs for the AppService and only account for costs generated through user interaction we get (90 / 500) = 0,18ct per user. The AppService is a mostly fixed cost as it is billed per running time, but media services costs scale upwards with user interaction.
+% das "we" muss weg. hier wird nichts personalisiert
+This brings us to a rough estimate (appsrv+streaming + encoding + storage) of 130 dollar each month. Spreading the costs to the users means every user uses services worth (130 / 500) = 0,26ct. If we omit the costs for the AppService and only account for costs generated through user interaction we get (90 / 500) = 0,18ct per user. The AppService is a mostly fixed cost as it is billed per running time, but media services costs scale upwards with user interaction.
 
-Kosten: 80/20 Creator / SciTube
+Costs: 80/20 Creator / SciTube
 Every encoding costs: $Length * BasePriceHD$
 Every view costs: $VideoSize * (Streaming+CDN)$
-Every vid costs: $Size * StoragePrice$
+Every video costs: $Size * StoragePrice$
 Every month costs: $AppServiceBasePrice * Throughput$
+
+% hier muss noch nen genauer finanzierungsplan hin, also was verlangen wir für einen user? was für ein video? oder finanzieren wir den ganzen kram durch werbung? abo-modell ähnlich dem von spotify evtl?
+
+% eventuell bezug auf die im anhang klebenden tabellen nehmen?

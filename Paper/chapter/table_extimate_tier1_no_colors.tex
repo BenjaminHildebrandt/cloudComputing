@@ -10,9 +10,8 @@
         % \end{landscape}
 % \usepackage[normalem]{ulem}
 % \useunder{\uline}{\ul}{}
-\begin{landscape}
-        \begin{table}[]
-                \begin{tabularx}{\linewidth}{|l|X|X|X|}        % \begin{tabular}{c||c|c|c{10cm}|c}    geht auuuuuuuuuuuch nich, das formatieren soooo <.<
+\begin{adjustbox}{angle=90}
+                \begin{tabularx}{\textheight}{|l|X|X|X|}
                 \hline
                 \multicolumn{3}{|l|}{{\ul \textbf{Microsoft Azure Estimate 1/2}}}                     & {\ul \textbf{SciTub Basic}}                         \\ \hline
                 \textbf{Service type}             & \textbf{Custom name}      & \textbf{Description}                                                                                                                                                                                                                             & \textbf{Estimated Cost}                  \\ \hline\hline
@@ -23,8 +22,7 @@
                 \textbf{Load Balancer}            &                           & Basic Load Balancer is free of charge                                                                                                                                                                                                            & \$0,00                                   \\ \hline
                 \textbf{Application Gateway}      &                           & Basic tier, Medium Instance size: 0 Gateway hours instance(s) x 730 Hours, 0 TB Data processed unit(s), 5 GB Zone unit(s)                                                                                                                        & \$0,00                                   \\ \hline
                 \textbf{IP Addresses}             &                           & 1 Dynamic IP Addresses, 5 Static IP Addresses, 0 Remaps                                                                                                                                                                                          & \$0,00                                   \\ \hline
+                
                 \end{tabularx}
-                \caption{Azure Pricing Estimate Basic 1/2}
                 \label{azPriceT1_1}
-        \end{table}
-\end{landscape}
+\end{adjustbox}
