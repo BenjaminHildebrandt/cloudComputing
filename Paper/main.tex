@@ -27,19 +27,18 @@ sorting=ynt
 % \addbibresource{mybibfile}    % lni.dtx  Z.615ff
 
 \begin{document}
-%\title[Cloud Computing: SciTube] {A scientific Video-on-Demand-Solution powered by Microsoft Azure}
-\title{Cloud Computing: SciTube}
+%\title[Cloud Computing: SciTub] {A scientific Video-on-Demand-Solution powered by Microsoft Azure}
+\title{Cloud Computing: SciTub}
 \subtitle{A scientific Video-on-Demand-Solution powered by Microsoft Azure}
 \author[Markus Herche \and Benjamin Hildebrandt]
-{Markus Herche\footnote{Hochschule Fulda, Dept. of Computer Science, Leipziger Straße 123, 36037 Fulda,
-Germany \email{markus.j.herche@cs.hs-fulda.de}} \and
-Benjamin Hildebrandt\footnote{Hochschule Fulda, Dept. of Computer Science, Leipziger Straße 123, 36037 Fulda,
-Germany
-\email{benjamin.hildebrandt@cs.hs-fulda.de}}}
+{Markus Herche\footnote{\email{markus.j.herche@cs.hs-fulda.de}} \and
+Benjamin Hildebrandt\footnote{\email{benjamin.hildebrandt@cs.hs-fulda.de}}\\
+Hochschule Fulda, Dept. of Computer Science, Leipziger Straße 123, 36037 Fulda,
+Germany}
 
 \booktitle{Cloud Computing} % Name of book title
 \editor{Markus Herche \& Benjamin Hildebrandt} % Names of Editors
-\booktitle{SciTube} % Name of book title
+\booktitle{SciTub} % Name of book title
 \year{2018-2019}
 
 
@@ -47,11 +46,11 @@ Germany
 
 \begin{abstract}
     The saying goes that a picture says more than a thousand words. This should apply to scientific papers as well,
-    because why describe e.g. the deformation of a curve, when that can just be shown in a quick video. The following 
+    because why describe e.g. the deformation of a curve or the optimization of package flow in a network when that can just be shown in a quick video. The following 
     paper outlines a basic cloud-based video-on-demand-solution with a pay-per-view-model. 
 \end{abstract}
 
-Note: This project made possible through the Microsoft Azure Academic Program.
+Note: This project was made possible thanks to the Microsoft Azure Academic Sponsorship Program.
 
 \input{chapter/ch1_prereq_scenario}
 \input{chapter/ch2_az_fundamentals}
@@ -66,18 +65,20 @@ Note: This project made possible through the Microsoft Azure Academic Program.
 %tables
 \section*{Tables}
 \input{chapter/table_extimate_tier1_no_colors}
-\newpage
-\input{chapter/table_extimate_tier1_2}
+%\newpage
+%\input{chapter/table_extimate_tier1_2}
 \newpage
 
 %images
 \section*{Images}
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth, height=180px]{ressources/architecture_ms.png}
-    \caption{Microsofts proposed VoD architecture}
+    \includegraphics[width=1\textwidth, height=180px]{ressources/architecture_MS.PNG}
+    \caption{Microsoft's proposed VoD architecture\\\hspace{\textwidth}Source: \url{https://azure.microsoft.com/en-gb/solutions/architecture/digital-media-video/}}
     \label{fig:arch_ms}
 \end{figure}
+%  https://tex.stackexchange.com/questions/101595/how-to-add-line-break-to-caption-without-using-caption-package
+
 % plain bibtex:
 %\bibliographystyle{lni}
 %\bibliography{mybibfile}

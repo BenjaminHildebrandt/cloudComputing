@@ -1,9 +1,32 @@
 \section{Evaluation of cloud criteria}\label{sec:ch4}
-As defined by the US-based \textit{National Institute of Standards and Technology} (NIST) a cloud service must fulfill certain criteria \cite{nistCloud}. This section gives a brief overview and reviews the application's fulfillment of each.
+As defined by the US-based \textit{National Institute of Standards and Technology}
+(NIST) a cloud service must fulfill certain criteria \cite{nistCloud}. This 
+section gives a brief overview and reviews the application's fulfillment of each.
 \begin{itemize}
-    \item \textbf{On-Demand Self Service:} Users can create and scale resources through the aforementioned (chapter \ref{sec:ch2}) user interfaces at any time and to any capacity they desire. Only starting up and allocating resources takes some time. The implementation uses the Azure API when execute \textit{AzureMediaServices.azcli}.
-    \item \textbf{Broad Network Access:} Provided, as Microsoft holds a global server network and content can be delivered as HTML to be viewed in browsers on supporting devices. The access can be expanded by using the in chapter \ref{sec:ch2} proposed CDN component.
-    \item \textbf{Resource Pooling:} Resources can be organized in logical groups, but that's not the point. Resources of the provider are shared between multiple users, called 'tenants'. 
-    \item \textbf{Rapid Elasticity:} Illusion of infinite resources and scaling: provided by Azure as far as end users have a valid subscription and the cost plan includes scaling. Vertical scaling (scale-up) requires manual action, especially because the shift in price between tiers can be dramatic. Horizontal scaling (scale-out) also depends in some cases from price tiers. Scale-outs usually depend on parameter like CPU, RAM or storage usage (NodeJS webservice). Other service scale totally automatic, as the payment is per GB (BlobStorage).
-    \item \textbf{Measured Services:} provided by azure: Insights and Billing, Alerts. Moreover, the implementation specific measurment will be the time, a user watches videos and storage is used by one user.
+    \item \textbf{On-Demand Self Service:} Users can create and scale resources 
+    through the aforementioned (chapter \ref{sec:ch2}) user interfaces at any time
+    and to any capacity they desire. Only starting up and allocating resources 
+    takes some time. The implementation uses the Azure API to do so.
+    \item \textbf{Broad Network Access:} Provided, as Microsoft holds a global 
+    server network and content can be delivered as HTML to be viewed in browsers 
+    on supporting devices. The access can be expanded by using the CDN component 
+    proposed in chapter \ref{sec:ch2}.
+    \item \textbf{Resource Pooling:} Resources can be organized in logical groups,
+    but that's not the point: Resources of the provider are shared between 
+    multiple users, called 'tenants'. This is a given as it is not clear where exactly
+    100 GB of videos are saved, aside from a geographical region. Most likely it is also
+    just a partition on a bigger server hard disk instead of a dedicated device.
+    \item \textbf{Rapid Elasticity:} Illusion of infinite resources and scaling: 
+    provided by Azure as long as end users have a valid subscription and the cost 
+    plan includes scaling. Vertical scaling (scale-up) requires manual action, 
+    especially because the shift in price between tiers can be dramatic. 
+    Horizontal scaling (scale-out) also depends in some cases from price tiers. 
+    Scale-outs usually depend on parameter like CPU, RAM or storage usage (in case of the NodeJS 
+    webservice). Other services scale totally automatic, as the payment is per GB used per month
+    (BlobStorage, Streaming Throughput).
+    \item \textbf{Measured Services:} Provided by Azure: the Insights and Billing modules
+    offer in-depth statistics and analysis of resource usage and generated costs. It's even
+    possible to configure Alerts, such as automatic sending of E-Mails or SMS for specific events,
+    such as reaching a set cost for the current month or should autoscaling be triggered. Moreover, the implementation specific measurement will be the time that a 
+    user spends watching videos and storage that is used by one user.
 \end{itemize}

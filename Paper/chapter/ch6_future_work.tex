@@ -1,11 +1,36 @@
-\section{Future Work}\label{sec:ch6}
+\section{Conclusion and Future Work}\label{sec:ch6}
 %CDN can be deployed and used easily but is not really needed right now. Scaling needs to be tested under real conditions (1000 -> 100000 Users), but only bc we need to know what to configure. Can assume that it works from a technical standpoint, as MS has way more experience
     % https://medium.com/@Traverous/the-tale-of-how-we-built-on-demand-streaming-for-traverous-on-azure-media-services-87e32f6a98d0
     %  https://devblogs.microsoft.com/premier-developer/how-to-setup-live-streaming-server-using-azure-media-service-in-less-than-30-mins/
     % https://docs.microsoft.com/de-de/azure/media-services/previous/media-services-streaming-endpoints-overview
+
+As it turns out, setting up a globally scalable solution is relatively simple
+using Microsoft's public cloud services. But consciously monitoring usage and resulting
+expenses is critical as it's easy to accidentally choose an option that increases costs exponentially.
 %In der Zukunft muss sich über ein Finanzierungsmodell gedanken gemacht werden. Ein möglicher Ansatz ist eine Mischung aus Werbefinanzierung und Abonement, ähnlich des Modells von Spotify. Eine Einteilung der Benutzer in Premium und Freemium ist von nöten. Freemium-User bekommen in regelmäßigen Abständen Werbung zu sehen, während Premium-User keine Werbung erhalten, aber monatlich einen finanziellen Beitrag bezahlen müssen.
 %Ebenfalls muss die Verteilung des Inhalts von einem Storage über ein CDN-Netzwerk von statten gehen. Dies ermöglicht den weltweit schnellen Zugriff auf Inhalte ohne große Verzögerungen. 
+In the future, a final financing plan must be implemented. Some attempts were 
+already discussed in the previous chapter. Instead of using one plan straight, 
+after acquiring users (financing by advertising), a subscription model could be 
+implemented (free minutes at a discount if bought in advance).
+Another possibility would be a \glqq rent-or-buy\grqq system similar
+to Amazon Prime Instant Video. \\% in the true spirit of offering a 'service'
+Also of interest is the Azure Media Clipper widget, which offers basic video cutting
+functionality in a browser, allowing users to specifiy preview segments. AMS allows to
+either encode such snippets as separate videos (adding further costs for encoding which
+cannot be estimated) or to set \textit{filter rules} on existing media. Those should be
+preferred as they are minimal in size and come at negligible further costs.\\
+On the technical side, a CDN component should be implemented for a broad global 
+reach and to minimize the costs as mentioned in chapter \ref{sec:ch5}. Also 
+scaling needs to be tested under real conditions to find out the indicating 
+parameter.
+On one hand uploading the file from the user directly to the Azure Media Service 
+would increase the performance of the application as well. On the other hand it 
+would decrease the quality of service.\\
+Lastly, the newly passed EU copyright directive opens up a completely new set of 
+unanswered questions and problems for start-ups and content distributors in general.
+Those problems can and should not be tackled without costly legal advice.
 
-In the future, a final financing plan must be implemented. Some attempts were already discussed in the previous chapter. Instead of using one plan straight, after aquiring user (financing by advertising), a subscription model can be implemented. 
-On the technical side, a CDN component should be implemented for a broad global reach and to minimize the costs as mentioned in chapter \ref{sec:ch5}. Also scaling needs to be tested under real conditions to find out the indicating parameter.
-On one hand uploading the file from the user directly to the Azure Media Service would increase the performance of the application aswell. On the other hand it would decrease the quality of service.
+
+%  https://www.researchgate.net/profile/Chen_Wang30/publication/325922789_Comparing_Cloud_Content_Delivery_Networks_for_Adaptive_Video_Streaming/links/5b2c81564585150d23c1c024/Comparing-Cloud-Content-Delivery-Networks-for-Adaptive-Video-Streaming.pdf
+

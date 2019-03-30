@@ -2,24 +2,66 @@
 % Tabelle mit der Kostenaufstellung von Azure, skalierbare Elemente
 % in versch. Tiern, also am Anfang nur 100GB BlobStorage, später 1TB, dann 10TB
 % Kosten am Anfang (Tier 1): ca. 40 Euro im Monat, also mit einem Hartz4-Satz fast ein Jahr lang bezahlbar
-% Das teuerste ist anfangs der AppService
 % Finanzierung wird erst ein Problem, wenn viel mehr Content und Traffic anfallen
-Using CDN is preferable, because ``When Azure CDN is not enabled for Media Services, data transfer is charged at Data Transfer Pricing. When Azure CDN is enabled for Streaming Units, data transfer charges do not apply. Data transferred is instead just charged at standard CDN pricing.'' 
-% https://azure.microsoft.com/en-us/pricing/details/cdn/   vs   https://azure.microsoft.com/en-us/pricing/details/bandwidth/
-While at first the pricing for both is near identical, it's the range from the 50th on to the 150th TB in one month that already shows the disparity: \$0.07 per GB through standard file transfer vs  \$0.0037 via CDN.
-Bandwidth and CDN are also priced differently depending on region
+A full listing of all components' cost created with the help of the Azure Pricing Calculator is shown\footnote{\url{https://azure.microsoft.com/en-us/pricing/calculator/}} in Table 1, but in the following section charges less than a dollar have been omitted for brevity.
+According to an online filesize calculator\footnote{\url{https://toolstud.io/video/filesize.php}} a 25 FPS FullHD-Video 
+of $20$ minutes length would estimate to around $1$ GB in size (average between 
+\textit{YoutubeHD} and \textit{NetflixHD}).\\ % https://toolstud.io/video/filesize.php?imagewidth=1920&imageheight=1080&framerate=25&timeduration=60&timeunit=minutes
+Assuming that after a good start, a total of $500$ visitors arrive each month and watch $2$ videos each: 
+$(500 \ast (2 \ast 1 GB)) = 1000GB$ streaming throughput\footnote{...and $(500 \ast (2 \ast 20 min)) = 
+2000$ minutes (33,33 hours) of streamed video}. 
+Using CDN is preferable, because else data transfer is priced at standard bandwidth rates.
+While at first the pricing for both is near identical, the range from the 
+50th on to the 150th TB in one month already shows the disparity: \$0.07 
+per GB through standard file transfer vs. \$0.056 via CDN. \\
+CDN is also priced differently depending on the geographical region (\textit{zone}) the content is delivered to.
+When using standard CDN delivering to North America and Europe
+this results in costs of $(1000GB * 0,081\$ ) = 81,00\$$. Let's also assume
+there are 10 new videos each month, which results in a FullHD encoding output of 
+$(10 \ast 20 mins) = 200 minutes$ for $(6.75\$)$. There are now $100$ uploaded videos as the one described 
+before. The necessary blob storage for those amounts to $100GB$ at $0,0208\$/GB$ bringing the cost to $2,08\$$.\\
+However, adaptive streaming means the video must be encoded and provided with alternative resolutions. By offering versions
+in 720p, 480p and 360p their size sums up to about the same as the 1080p version. This effectively doubles the storage cost and quadruples encoding length, but SD-output encoding jobs are cheaper. This amounts to a total of $((2\ast 6.75\$ ) + (2 \ast 3.75\$)) + (2 \ast 2,08\$ ) = 21,00\$ + 4,16\$ = 25,16\$$
 
-According to an online filesize calculator \footnote{\url{https://toolstud.io/video/filesize.php}} a 25 FPS FullHD-Video of 20 minutes length would estimate to around 1 GB in size (average between \textit{YoutubeHD} and \textit{NetflixHD} with a necessary bandwidth of 8Mbps (1MB/s) in case of \textit{YoutubeHD} bitrate.  % ?imagewidth=1920&imageheight=1080&framerate=25&timeduration=60&timeunit=minutes
-Assume that after a good start there are now 100 videos as the one described before. A total of 500 visitors arrive each month and watch 2 videos each: $(500 \ast 2 GB) = 1TB$ Streaming Throughput and $(500 \ast 2 \ast 20 min)  = 2000$ minutes (33,33 hours) of streamed video. (1000GB * 0,08ct) = 80 dollar The necessary blob storage amounts to $100 \ast 1GB = 100GB$. Let's also assume we receive 10 new videos each month, which results in an encoding output of $(10 \ast 20 mins) = 200$ minutes (6.75 dollar).  
+Adding together the major expenses (CDN, Encoding, Storage and WebServer) this means running costs of 
+$ 81,00\$ + 25,16\$ + 38,69\$ = 144,85\$ $ for this particular month. Spreading the costs to the users
+means every user uses services worth $(145\$ / 500) = 0,29\$$. Omitting the costs for the AppService, costs generated through user interaction we get (106,16\$ / 500)
+= 0,212\$ per user. The AppService is a mostly fixed cost (if there are only short periods of 
+scaling or none at all) as it is billed per 
+running time, but media services costs scale upwards with user interaction.
+
+Based on these assumptions, costs would be covered if each user pays 1.00\$ each month,
+allowing for a 30/70 split between platform operators and content creators, albeit that
+leaves a profit margin of only 8 cents. Charging one dollar per 20 minutes of watched 'premium' 
+video on the other hand would result in $500 \ast 40 min \ast \frac{1}{20} \$/min = 500 \ast 2\$ = 1000\$$
+earnings for this month, which should be a sufficient income even after splitting (300 \$ for \textit{SciTub}) and also enough to cover showing free videos, which could be limited to a maximum length of 10 minutes, and re-watching premium content. 
+
 
 % das "we" muss weg. hier wird nichts personalisiert
-This brings us to a rough estimate (appsrv+streaming + encoding + storage) of 130 dollar each month. Spreading the costs to the users means every user uses services worth (130 / 500) = 0,26ct. If we omit the costs for the AppService and only account for costs generated through user interaction we get (90 / 500) = 0,18ct per user. The AppService is a mostly fixed cost as it is billed per running time, but media services costs scale upwards with user interaction.
+% This sums up to a rough estimate (appsrv+streaming + encoding + storage) of 
+% 130 dollar each month. Spreading the costs to the users means every user uses 
+% services worth (130 / 500) = 0,26ct. If we omit the costs for the AppService 
+% and only account for costs generated through user interaction we get (90 / 500)
+% = 0,18ct per user. The AppService is a mostly fixed cost (if there is no scaling
+% as it is billed per running time, but media services costs scale upwards with user interaction.
 
-Costs: 80/20 Creator / SciTube
-Every encoding costs: $Length * BasePriceHD$
-Every view costs: $VideoSize * (Streaming+CDN)$
-Every video costs: $Size * StoragePrice$
-Every month costs: $AppServiceBasePrice * Throughput$
+
+% ``When Azure CDN is not enabled for Media 
+% Services, data transfer is charged at Data Transfer Pricing. When Azure CDN is 
+% enabled for Streaming Units, data transfer charges do not apply. Data 
+% transferred is instead just charged at standard CDN pricing.'' 
+% https://azure.microsoft.com/en-us/pricing/details/cdn/   vs   https://azure.microsoft.com/en-us/pricing/details/bandwidth/
+
+
+
+% Costs: 80/20 Creator / SciTub
+% Every encoding costs: $Length * BasePriceHD$
+% Every view costs: $VideoSize * (Streaming+CDN)$
+% Every video costs: $Size * StoragePrice$
+% Every month costs: $AppServiceBasePrice * Throughput$
+
+%running ads may generate 800 eur for 500.000 users
+
 
 % hier muss noch nen genauer finanzierungsplan hin, also was verlangen wir für einen user? was für ein video? oder finanzieren wir den ganzen kram durch werbung? abo-modell ähnlich dem von spotify evtl?
 

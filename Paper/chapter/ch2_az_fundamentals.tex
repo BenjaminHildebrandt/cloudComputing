@@ -1,20 +1,70 @@
-\section{Microsoft Azure Fundamentals}\label{sec:ch2}Microsoft offers both \textit{Infrastructure} and \textit{Platform} as a Service through Microsoft Azure for customers to use and implement Software as a Service. Management functionality itself is provided as SaaS as well (accessible through Webbrowser and REST-API). Applications consist of multiple \glqq building blocks\grqq{} that can be managed individually, but organized together in \textit{resource groups}. These are groups for sorting and encapsulating different services or parts of one service. Every other component have to be in such a \textit{resource group}. 
+\section{Microsoft Azure Fundamentals}\label{sec:ch2}
+As explored in depth by Chen et al. \cite{chen2015crowdsourced}, cloud-based solutions are
+well suited for content distribution and live-streaming of video content in regards to  
+performance, availability, cost efficiency and scalability. 
+CDN performance appears to be identical (at least from the perspective of a startup without a target group 
+of millions of users) between Amazon CloudFront and Google CDN as shown by Wang et al.  
+\cite{wang2018comparing} in June 2018. However, their study showed a few deficits for Microsoft, who are working 
+together with Verizon and Akamai (not reviewed in the paper), such as unexplained performance drops. \\ %Albeit a few shortcomings
+Recently, Wilson and Dubinsky explored the possibilities of delivering content through the use of Microsoft
+Azure after migrating from Amazon Web Services. \cite{wilson2018piloting} Basically AWS was only used for 
+storing video files, where exposing the links to video files through regular browser playback imposed 
+copyright concerns. Also, they were looking for a solution that offers adaptive streaming with variable 
+bitrates. % , e.g. through DASH was wanted
+They chose Microsoft Azure as \textit{Azure Media Services} (AMS) offered a much better out-of-the-box solution 
+with many configurable parameters.
+In conclusion, they found that Azure was \glqq\textit{meeting [their] functional requirements and fully addressing
+long-held concerns}\grqq, but the project would prove too costly to further warrant using the set-up service. This will be reviewed in \ref{sec:ch5} albeit they were running a project for use in a university library where end-users are not charged.
 
-Managing and Configuring can be done via GUI in any Webbrowser through the Azure portal \footnote{\url{portal.azure.com}} or through \textit{Azure CLI} (Command Line Interface) scripts (similar to Shell- or Batch-scripts). Those can be exported from the GUI for easy reuse, minimizing the risk of missing a checkbox or a specific option. To run such scripts locally, it's necessary to install software \footnote{\url{https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest}}, which introduces platform-dependency. Parameters for options can be enclosed in high commas on Linux-systems, but must be put in double quotes on Windows.
+Microsoft offers both \textit{Infrastructure} and \textit{Platform as a 
+Service} through Microsoft Azure for customers to use and implement \textit{Software} \textit{as
+a Service} (\textit{SaaS}). Management and administration functionality itself is provided as \textit{SaaS} as well (accessible through Webbrowser and REST-API). 
+Applications consist of multiple services, similar to
+\glqq building blocks\grqq{} that can be managed individually, but can be organized 
+together in \textit{resource groups}. These are logical groups for sorting and 
+encapsulating different services or parts of one service. Every other component
+has to be in such a \textit{resource group}.
+
+Some services are tied to a separate account system but all are billed on a per-use basis, e.g.
+Media Encoding is billed per minute of encoded output, Bandwidth or CDN per transmitted Gigabyte.
+Others cost money as soon as they are started and running such as an AppService, live streaming 
+or a Virtual Machine, regardless of workload. Lastly, some services create costs as soon as they
+are created and as such, reserve capacity in Microsofts datacenters, like storage for VMs. \\
+%live-streaming is billed per minute of running stream,
+Managing and Configuring can be done via a GUI in any Browser through the 
+Azure portal \footnote{\url{portal.azure.com}} or through \textit{Azure CLI} 
+(Command Line Interface) scripts (similar to Shell- or Batch-scripts). Those 
+can be exported from the GUI for easy reuse, minimizing the risk of missing a 
+checkbox or a specific option. To run such scripts locally, it's necessary to 
+install specific software \footnote{\url{https://docs.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest}}, which introduces a bit of platform-dependency. 
+
+For example, a parameter list for options can be enclosed in high commas when entered into 
+terminals on Linux-systems or the Windows Subsystem for Linux, but must be placed in double quotes on Windows \textit{cmd}.
+Another hindrance for collaboration is the uniqueness of identifiers. Some IDs need to be unique
+only in respect to all other resources of a user, whereas others need to be unique throughout Azure \cite{azNaming}. 
+An example for the latter would be the name of an AppService and therefore it's resulting
+subdomain \textit{xyz.azurewebsites.net} provided by Azure. This creates the need to keep different variants of scripts when developing and testing with multiple Azure Accounts.
 
 Azure CLI commands (for the most part) have the following pattern:\\
 \texttt{az [resource-type] [action] [--option 'parameters'] [further options]}\\
-Upon execution they either terminate with an error message or by printing a JSON received from Azure on success, offering details about the performed action.
+Upon execution such commands either terminate with an error message or by printing a JSON 
+received from Azure on success, offering details about the performed action. \\
 % Lästig: manche Bezeichner (zb für Storage Accounts, logischerweise AppService für die Subdomain) müssen in Azure eindeutig sein, manche nur innerhalb der eigenen Ressourcensammlung\cite{azNaming}. erschwert kollaboration und versionierung, wenn skripte sich durch namen unterscheiden 
 % Unterschiede zwischen Bash und cmd-Skripten (azcli on Windows vs Linux bzw. WSL) bei parametern: Hochkommata vs Anführungszeichen
 % AZCLI-Kommandos beginnen mit az, geben dann (ggf. Ressourcentyp) und die Aktion an. Als Antwort gibt es JSON mit Komplettinfos über die erstellte Instanz
-
-Azure provides many service solutions where one is a Video-on-demand service. This implementation is shown in figure \ref{fig:arch_new} and contains the following cloud components\footnote{\url{https://azure.microsoft.com/en-gb/solutions/architecture/digital-media-video/}}:
+Microsoft provides many example architectures called \textit{solutions} where one is a Video-on-demand service.
+This implementation is shown in figure \ref{fig:arch_new} and contains the 
+following cloud components\footnote{\url{https://azure.microsoft.com/en-gb/solutions/architecture/digital-media-video/}}:
 \begin{itemize}
-    \item \textbf{BlobStorage:} Can store a large amount of unstructured data and can be accessed from anywhere by using http or https. Here the files will be stored.
-    \item \textbf{Streaming Endpoint:} Deliveres content directly to a player application or to a content-delivery network (CDN).
-    \item \textbf{Azure Encoder:} Creates jobs, which convert media files from one encoding to another.
+    \item \textbf{BlobStorage:} Can store a large amount of unstructured data 
+    and can be accessed from anywhere by using http or https. Here the files 
+    will be stored.
+    \item \textbf{Streaming Endpoint:} Deliveres content directly to a player 
+    application or to a content-delivery network (CDN).
+    \item \textbf{Azure Encoder:} Processes jobs, which convert media files from 
+    one encoding to another.
     \item \textbf{Azure CDN:} Delivers content with a broad global reach.
-    \item \textbf{Azure Media Player:} A player application which can be used to directly stream media files from \textit{Streaming Endpoints}.
+    \item \textbf{Azure Media Player:} A player application which can be used 
+    to directly stream media files from \textit{Streaming Endpoints}.
     \item \textbf{Multi-DRM content protection:} Multi-DRM or AES clear key encryption.
 \end{itemize}
