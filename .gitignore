@@ -2,3 +2,6 @@ node_modules/
 Paper/*.log
 Paper/*.out
 .vscode/
+Presentation/*.sync*
+Presentation/*.log
+Presentation/*.out

@@ -1,0 +1,70 @@
+\usetheme{Rochester}
+\RequirePackage{pgf}
+\pgfdeclareimage[width=1.0\paperwidth]{header-logo}{fulda_logo}
+\setbeamercovered{transparent}
+
+\useoutertheme{default}
+
+\usecolortheme{seahorse}
+
+\useinnertheme{rounded} 
+
+\usecolortheme{orchid}
+
+\usecolortheme[RGB={102,204,51}]{structure}
+
+\setbeamertemplate{itemize items}[square]
+\setbeamertemplate{enumerate items}[circle]
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+
+\defbeamertemplate*{footline}{fulda theme}{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortdate
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.416667\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+   \begin{beamercolorbox}[wd=0.083333\paperwidth,ht=2.25ex,dp=1ex,right]{title in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\pgfdeclareimage[width=\paperwidth,height=\paperheight]{bg}{fulda_background}
+\setbeamertemplate{background}{\pgfuseimage{bg}}
+
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+
+\defbeamertemplate*{frametitle}{fulda theme}
+{
+  \vskip-0.35\beamer@headheight
+  \vskip-\baselineskip
+  \vskip-0.2cm
+  \hskip-0.5cm\usebeamerfont*{frametitle}\insertframetitle
+  \vskip-0.10em
+  \hskip-0.5cm\usebeamerfont*{framesubtitle}\insertframesubtitle
+}
+
+\defbeamertemplate*{headline}{fulda theme}{%
+
+  \pgfuseimage{header-logo}
+  \vskip -1.95cm
+  \linethickness{0pt}
+
+  \framelatex{
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.3\beamer@headheight]{Title bar}
+    \usebeamerfont{section in head/foot}%
+  \end{beamercolorbox}}
+
+\framelatex{
+  \begin{beamercolorbox}[wd=\paperwidth,ht=0.9\beamer@headheight]{Title bar}
+  \end{beamercolorbox}}
+}
+
+
+

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#Delete everything at once
+az group delete --name mediaServiceCC19Resource --yes
