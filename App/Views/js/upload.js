@@ -52,7 +52,7 @@ function send(){
 
     file = files[0];
     formData.append('video', file, file.name);
-    formData.append('title', $("#title").val());
+    formData.append('title', $("#name").val());
     formData.append('description', $("#description").val());
     
     uploadFiles(formData);

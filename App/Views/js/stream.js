@@ -11,7 +11,8 @@ $('document').ready(() => {
     // Add a testvideo
     addVideo({
         title: "Demo video",
-        path: "//amssamples.streaming.mediaservices.windows.net/3b970ae0-39d5-44bd-b3a3-3136143d6435/AzureMediaServicesPromo.ism/manifest"
+        description: "This is a static video",
+        url: "//amssamples.streaming.mediaservices.windows.net/3b970ae0-39d5-44bd-b3a3-3136143d6435/AzureMediaServicesPromo.ism/manifest"
     });
 
     // Get all videos from server
