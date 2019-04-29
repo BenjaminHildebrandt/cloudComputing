@@ -1,14 +1,14 @@
 \documentclass[aspectratio=169]{beamer}
 
-\usepackage{graphicx,fulda,german,float}
+\usepackage{graphicx,fulda,german,float, tabto}
 
 \setbeamertemplate{section in toc}[sections numbered]
 
 % Title
 \title[Cloud Computing]{Cloud Computing WiSe 19}
-\subtitle{Video On Demand - SciTube}
-\author[Hildebrandt, Herche]{Benjamin Hildebrandt \\ Markus J. Herche}
-\institute{Fachbereich Angewandte Informatik\\Hoschule Fulda -- University of Applied Sciences}
+\subtitle{SciTub - Video On Demand on Microsoft Azure}
+\author[Hildebrandt, Herche]{Benjamin Hildebrandt \\ Markus Herche}
+\institute{Fachbereich Angewandte Informatik\\Hochschule Fulda -- University of Applied Sciences}
 
 \begin{document}
 
@@ -61,6 +61,35 @@
     \item \textbf{Webservice:} Schnittstelle zwischen Azure und Client. Upload der Files werden hier verarbeitet und vorhandene Videos abgerufen.
     \item \textbf{Database:} Umfasst alle Metadaten der Files und (später) Nutzerdaten
   \end{itemize}
+\end{frame}
+
+%%%%% NIST-Kriterien
+% Werden alle Kriterien erfüllt? Ja, die meisten schon durch die Nutzung von Azure
+\begin{frame}
+  \frametitle{NIST-Kriterien}
+  \framesubtitle{Ist das eine Cloud-Anwendung?}
+  \begin{itemize}
+    \item \textbf{On-Demand Self Service:} UI durch Dashboard und APIs
+    \item \textbf{Broad Network Access:} Übertragung von ``gewöhnlichen'' Datenarten
+    \item \textbf{Resource Pooling:} Wir kennen nicht den Aufbau von MS-Datencentern...
+    \item \textbf{Rapid Elasticity:} Automatische Skalierung (Grenzwerte nicht untersucht)
+    \item \textbf{Measured Services:} Abrechnung pro Nutzungstakt, tabellarisch einsehbar
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{NIST-Kriterien}
+  \framesubtitle{Ist das eine Cloud-Anwendung?}
+%  \begin{tabbing}    %https://tex.stackexchange.com/questions/14038/tabbing-inside-itemize-or-itemize-inside-tabbing
+  \begin{itemize}
+    \item \textbf{On-Demand Self Service}\tabto{6cm}\checkmark 
+    %\hspace{1em} \= \checkmark  1 st line, set tabbing
+    \item \textbf{Broad Network Access}\tabto{6cm}  \checkmark   %\>
+    \item \textbf{Resource Pooling}\tabto{6cm} \checkmark
+    \item \textbf{Rapid Elasticity}\tabto{6cm}\checkmark
+    \item \textbf{Measured Services}\tabto{6cm}\checkmark
+  \end{itemize}
+%  \end{tabbing}
 \end{frame}
 
 %%%%% Funktionsweise
